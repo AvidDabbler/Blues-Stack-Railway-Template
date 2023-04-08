@@ -38,7 +38,7 @@ ADD prisma .
 RUN npx prisma generate
 
 ADD . .
-RUN npm run postinstall
+RUN yarn postinstall
 RUN yarn build
 
 ARG DATABASE_URL

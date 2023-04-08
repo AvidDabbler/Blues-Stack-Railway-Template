@@ -22,7 +22,7 @@ WORKDIR /myapp
 
 COPY --from=deps /myapp/node_modules /myapp/node_modules
 ADD package.json yarn.lock .npmrc ./
-RUN yarn prune --production
+# RUN yarn prune --production
 
 # Run migrations
 ARG DATABASE_URL

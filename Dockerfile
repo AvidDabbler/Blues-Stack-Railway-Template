@@ -25,7 +25,6 @@ ADD package.json yarn.lock .npmrc ./
 # RUN yarn prune --production
 
 # Run migrations
-ARG DATABASE_URL
 # RUN yarn deploy:db
 
 # Build the app
@@ -37,10 +36,12 @@ COPY --from=deps /myapp/node_modules /myapp/node_modules
 
 ADD prisma .
 RUN npx prisma generate
-RUN npx prisma migrate deploy
 
 ADD . .
 RUN yarn build
+
+ARG DATABASE_URL
+RUN npx prisma migrate deploy
 
 # Finally, build the production image with minimal footprint
 FROM base

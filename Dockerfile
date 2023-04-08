@@ -24,6 +24,10 @@ COPY --from=deps /myapp/node_modules /myapp/node_modules
 ADD package.json package-lock.json .npmrc ./
 RUN npm prune --production
 
+# Run migrations
+ARG DATABASE_URL
+RUN npm run deploy:db
+
 # Build the app
 FROM base as build
 

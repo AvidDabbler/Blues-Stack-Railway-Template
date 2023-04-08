@@ -17,7 +17,7 @@ app.use(
 
 app.use((req, res, next) => {
   // helpful headers:
-  res.set("x-fly-region", process.env.FLY_REGION ?? "unknown");
+  // res.set("x-fly-region", process.env.FLY_REGION ?? "unknown");
   res.set("Strict-Transport-Security", `max-age=${60 * 60 * 24 * 365 * 100}`);
 
   // /clean-urls/ -> /clean-urls
@@ -34,28 +34,28 @@ app.use((req, res, next) => {
 // non-GET/HEAD/OPTIONS requests hit the primary region rather than read-only
 // Postgres DBs.
 // learn more: https://fly.io/docs/getting-started/multi-region-databases/#replay-the-request
-app.all("*", function getReplayResponse(req, res, next) {
-  const { method, path: pathname } = req;
-  const { PRIMARY_REGION, FLY_REGION } = process.env;
+// app.all("*", function getReplayResponse(req, res, next) {
+//   const { method, path: pathname } = req;
+//   // const { PRIMARY_REGION, FLY_REGION } = process.env;
 
-  const isMethodReplayable = !["GET", "OPTIONS", "HEAD"].includes(method);
-  const isReadOnlyRegion =
-    FLY_REGION && PRIMARY_REGION && FLY_REGION !== PRIMARY_REGION;
+//   // const isMethodReplayable = !["GET", "OPTIONS", "HEAD"].includes(method);
+//   // const isReadOnlyRegion =
+//   //   FLY_REGION && PRIMARY_REGION && FLY_REGION !== PRIMARY_REGION;
 
-  const shouldReplay = isMethodReplayable && isReadOnlyRegion;
+//   // const shouldReplay = isMethodReplayable && isReadOnlyRegion;
 
-  if (!shouldReplay) return next();
+//   // if (!shouldReplay) return next();
 
-  const logInfo = {
-    pathname,
-    method,
-    PRIMARY_REGION,
-    FLY_REGION,
-  };
-  console.info(`Replaying:`, logInfo);
-  res.set("fly-replay", `region=${PRIMARY_REGION}`);
-  return res.sendStatus(409);
-});
+//   const logInfo = {
+//     pathname,
+//     method,
+//     // PRIMARY_REGION,
+//     // FLY_REGION,
+//   };
+//   console.info(`Replaying:`, logInfo);
+//   // res.set("fly-replay", `region=${PRIMARY_REGION}`);
+//   return res.sendStatus(409);
+// });
 
 app.use(compression());
 

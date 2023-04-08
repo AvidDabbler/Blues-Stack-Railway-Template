@@ -26,7 +26,7 @@ ADD package.json yarn.lock .npmrc ./
 
 # Run migrations
 ARG DATABASE_URL
-RUN yarn deploy:db
+# RUN yarn deploy:db
 
 # Build the app
 FROM base as build

@@ -38,10 +38,11 @@ ADD prisma .
 RUN npx prisma generate
 
 ADD . .
+RUN npm run postinstall
 RUN yarn build
 
 ARG DATABASE_URL
-RUN npx prisma migrate deploy
+RUN yarn deploy:db
 
 # Finally, build the production image with minimal footprint
 FROM base

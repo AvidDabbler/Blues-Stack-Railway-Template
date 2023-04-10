@@ -41,7 +41,7 @@ ADD . .
 RUN yarn postinstall
 RUN yarn build
 
-ARG DATABASE_URL
+ARG FRONTEND_DATABASE
 RUN yarn deploy:db
 
 # Finally, build the production image with minimal footprint

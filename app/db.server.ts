@@ -21,10 +21,10 @@ if (process.env.NODE_ENV === "production") {
 }
 
 function getClient() {
-  const { FRONTEND_DATABASE } = process.env;
-  invariant(typeof FRONTEND_DATABASE === "string", "FRONTEND_DATABASE env var not set");
+  const { DATABASE_URL } = process.env;
+  invariant(typeof DATABASE_URL === "string", "DATABASE_URL env var not set");
 
-  const databaseUrl = new URL(FRONTEND_DATABASE);
+  const databaseUrl = new URL(DATABASE_URL);
 
   const isLocalHost = databaseUrl.hostname === "localhost";
 
